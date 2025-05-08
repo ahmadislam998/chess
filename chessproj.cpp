@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
+
 using namespace std;
 
 struct square{
@@ -62,6 +64,7 @@ class game{
         }
     }
     void displayboard(){
+        system("cls");
         bool flag = true;
         cout<<"chess\n\n\n";
         cout<<" _______________\n";
@@ -180,11 +183,9 @@ class game{
         string location;
         int x, y, oldx, oldy;
         bool flag, outerflag;
-        if(blackcheckmate){cout<<"black has been checkmated, white wins!!";}
-        if(whitecheckmate){cout<<"black has been checkmated, black wins!!";}
         if(playerturn == true){
             do{
-                outerflag == true;
+                outerflag = true;
                 do{
                     flag = true;
                     cout<<"whites turn\n\n\nselect the location of the piece that you want to move: ";
@@ -315,6 +316,14 @@ class game{
                 board[x][y].blackatk = false;
                 board[x][y].whiteatk = false;
             }
+        }
+        for(int i = 0; i < 8; ++i){
+            delete[] moves[i];
+        }
+        delete[] moves;
+        this->moves = new adjlist*[8];
+        for(int i = 0; i < 8; i++){
+            moves[i] = new adjlist[8];
         }
         for(int x = 0; x <8; x++){
             for(int y = 0; y < 8; y++){
@@ -883,6 +892,8 @@ int main(){
         mygame.adjlistupdate(whitecheck, blackcheck, whitecheckmate, blackcheckmate);
         mygame.displayboard();
         mygame.turn(whitecheck, blackcheck, whitecheckmate, blackcheckmate);
+        if(blackcheckmate){cout<<"black has been checkmated, white wins!!"; break;}
+        if(whitecheckmate){cout<<"white has been checkmated, black wins!!"; break;}
     }
     return 0;
 }
